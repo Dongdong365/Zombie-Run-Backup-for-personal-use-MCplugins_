@@ -28,11 +28,11 @@
 ./gradlew.bat shadowJar
 ```
 
-1. 将产物放入服务器 `plugins` 目录（通常在 `build/libs` 下，带 `-all` 的 jar）。
-2. 启动服务器后，插件会生成配置文件：
+2. 将产物放入服务器 `plugins` 目录（通常在 `build/libs` 下，带 `-all` 的 jar）。
+3. 启动服务器后，插件会生成配置文件：
    - `plugins/zombie-run/config/config.yml`
-3. 按你的地图修改门、按钮、区域、重生点等坐标。
-4. 使用 `/zr reload` 热重载配置，或重启服务器生效。
+4. 按你的地图修改门、按钮、区域、重生点等坐标。
+5. 使用 `/zr reload` 热重载配置，或重启服务器生效。
 
 ## 命令说明
 
@@ -112,19 +112,9 @@
 | `%zombierun_stamina_bar%`                 | 玩家体力条（20 格，带颜色）          | 是      | `§a████████████████§7████` |
 | `%zombierun_stamina_state%`               | 体力状态（1 正常，2 耗尽）          | 是      | 1                        |
 
-## 开发
+## 参与开发
 
-### 本地运行测试服
-
-```bash
-./gradlew.bat runServer
-```
-
-### 构建
-
-```bash
-./gradlew.bat build
-```
+开发环境搭建、调试与提交流程请查看 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
 ## 常见问题
 
