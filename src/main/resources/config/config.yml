@@ -1,0 +1,130 @@
+# ========================================
+# 僵尸快跑插件配置文件
+# ========================================
+
+# 游戏基础设置
+game:
+  # 游戏模式
+  mode: zombie_run
+  # 游戏世界名称
+  world: world
+  # 开局倒计时（秒），达到最少人数后开始倒数
+  start-delay: 30
+  # 最少开始人数
+  min-players: 8
+  # 最多玩家数
+  max-players: 32
+  # 游戏最大时长（秒），默认30分钟
+  max-duration: 1800
+
+# 等待大厅出生点（默认）
+spawn:
+  x: 0
+  y: 64
+  z: 0
+  yaw: 0.0
+  pitch: 0.0
+
+# 结束点坐标（可选）
+end:
+  x: 100
+  y: 64
+  z: 100
+
+# 普通僵尸设置
+zombie:
+  # 血量倍率（基础20血 × 2 = 40血）
+  health-multiplier: 2.0
+  # 速度倍率
+  speed-multiplier: 1.2
+  # 伤害倍率
+  damage-multiplier: 1.5
+
+# 母体僵尸设置
+alpha-zombie:
+  # 血量倍率（20血 × 25 = 500血）
+  health-multiplier: 25.0
+  # 是否显示紫色粒子特效
+  particle: true
+
+# 人类玩家设置
+human:
+  # 速度倍率
+  speed-multiplier: 1.0
+  # 跳跃倍率
+  jump-multiplier: 1.0
+  # 体力恢复速度
+  stamina-regen: 0.1
+
+# 体力系统设置
+stamina:
+  # 最大体力值
+  max: 100.0
+  # 疾跑消耗（每tick）
+  sprint-cost: 0.5
+  # 站立恢复（每tick）
+  standing-regen: 0.2
+
+# 武器价格设置
+weapons:
+  # 枪械默认价格（硬币）
+  default-price: 600
+  # 单独指定某枪械的价格
+  prices:
+    # 示例：
+    # AK47: 800
+    # M4A1: 750
+
+# 杂项设置
+misc:
+  # 爆炸伤害减免系数（0.5 = 减少50%）
+  explosion-damage-reduction: 0.5
+  # 击退减免系数
+  knockback-reduction: 0.3
+  # 僵尸受击击退力
+  zombie-knockback-force: 0.8
+
+# ========================================
+# 地图元素配置（通过游戏内命令添加更方便）
+# 使用 /zr spawn/doors/buttons 命令管理
+# ========================================
+
+# 门配置示例
+# doors:
+#   door_1:
+#     x1: 10
+#     y1: 64
+#     z1: 10
+#     x2: 12
+#     y2: 65
+#     z2: 10
+#     mode: normal        # 门模式：normal(普通), player(开局开), zombie(1秒后开), start(倒计时开)
+#     door-number: 1      # 门编号
+#     delay: 30           # 关门延迟（tick）
+#     open-time: 10       # 保持开门时间
+#     close-time: 15      # 关闭所需时间
+#     material: STONE     # 门方块材质
+
+# 按钮配置示例
+# buttons:
+#   button_1:
+#     x: 15
+#     y: 64
+#     z: 15
+#     mode: normal        # 按钮模式：normal(开门), tp(传送), escape(撤离)
+#     door-number: 1      # 控制的门编号
+
+# 重生点配置示例
+# respawns:
+#   wait:
+#     x: 0
+#     y: 64
+#     z: 0
+#     type: WAIT         # 重生类型：WAIT(等待区), HUMAN, ZOMBIE, ZOMBIE_MAIN
+#   human_1:
+#     x: 50
+#     y: 64
+#     z: 50
+#     type: HUMAN
+#     door-number: 1     # 开门后启用
+#     room-number: 1
