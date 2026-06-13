@@ -9,6 +9,10 @@
  - 与原版相同但修复了粒子在paper1.21.111的刷屏报错<br/>
  - 并使用ai加上了配置的注释(当然不知道能不能用了)<br/>
  - 配置内添加了母体设置(额好像也不能用喵)<br/>
+ - reset-all 指令 当你退出游戏是玩家血量可能不对，应该是正常的吧我没测试，还是有别的bug我还没改到。
+ - 游戏开始时传送玩家和母体 到对应重生点(我不知道这是不是修复，或许原版就有吧);
+ - 修复tab补全越界崩溃;
+ - 新增枪械商店GUI与配置
 ---<br/>
 总之，这是个无能的腐竹在使用AI改来改去原版的产物<br/>
 确实能用~<br/>
@@ -26,25 +30,24 @@
 <br/><br/>
 ---<br/><br/>
 <br/>
-# Zombie Run Plugin
+# Zombie_Run_BFPU Plugin
 
-一个基于 Paper 1.21 的僵尸逃生小游戏插件，包含以下核心机制：
+一个基于 Paper 1.21.11 的僵尸逃生小游戏插件，包含以下核心机制：
 
 - 自动开局与倒计时（达到最小人数后自动进入准备阶段）
 - 人类/僵尸/母体阵营与回合结算
 - 门、按钮、区域、重生点驱动的地图流程控制
 - 体力系统、硬币/击杀/感染统计
 - PlaceholderAPI 占位符扩展（前缀 `zombierun`）
-- 与 WeaponMechanics 联动发放/购买枪械
+- 与 WeaponMechanics crackshot-guns 等等各种枪械插件 联动发放/购买枪械
 
 ## 运行环境
 
 - Java: `21`
-- 服务端: `Paper 1.21.11`（或同 API 版本的 1.21.x）
+- 服务端: `Paper 1.21.11`（仅测试了paper1.21.11,其他的服务端不知道能不能用）
 - 构建: `Gradle (Kotlin DSL)`
 - 可选依赖:
   - `PlaceholderAPI`（启用占位符）
-  - `WeaponMechanics`（枪械购买与发放）
 
 > 说明：`PlaceholderAPI` 未安装时插件会正常启动，但占位符不会注册。
 
@@ -58,40 +61,46 @@
 
 2. 将产物放入服务器 `plugins` 目录（通常在 `build/libs` 下，带 `-all` 的 jar）。
 3. 启动服务器后，插件会生成配置文件：
-   - `plugins/zombie-run/config/config.yml`
+   - `plugins/Zombie_Run_BFPU/config/config.yml`
+   - `plugins>Zombie_Run_BFPU>config/gunandgui.yml`
 4. 按你的地图修改门、按钮、区域、重生点等坐标。
 5. 使用 `/zr reload` 热重载配置，或重启服务器生效。
 
 ## 命令说明
 
-### 主命令
-
-- `/zr`：显示帮助
-- `/zr start`：管理员强制开始
-- `/zr reload`：重载配置
-- `/zr door <门号>`：触发指定门
-- `/zr open`：控制台开局（仅控制台）
-- `/zr close`：结束当前对局
-
-### 配置编辑命令（管理员）
-
-- `/zr spawn add|remove|list ...`：管理重生点
-- `/zr doors add|remove|list ...`：管理门
-- `/zr buttons add|remove|list ...`：管理按钮（`normal` / `tp` / `escape`）
-
-### 玩家功能命令
-
-- `/zr select <编号>`：选择偏好枪械（下次随机时优先购买）
-- `/zr unselect`：取消偏好选择
-- `/zr randomgun`：随机发放枪械（人类）
-- `/zr lobby`：返回大厅
-- `/zr transfer <玩家> <金额>`：转账硬币
+[18:46:38 INFO]: ===== 僵尸快跑命令 =====
+[18:46:38 INFO]: 玩家命令:
+[18:46:38 INFO]: /zr shop - 打开枪械商店 (选择你喜欢的枪械)
+[18:46:38 INFO]: /zr coins - 查看你的硬币余额
+[18:46:38 INFO]: /zr coins <玩家> - 查看他人硬币余额
+[18:46:38 INFO]: /zr transfer <玩家> <金额> - 转账硬币给其他玩家
+[18:46:38 INFO]: /zr reset-select - 清除你的枪械选择
+[18:46:38 INFO]: /zr lobby - 返回大厅
+[18:46:38 INFO]: 
+[18:46:38 INFO]: 管理员命令:
+[18:46:38 INFO]: /zr start - 开始游戏
+[18:46:38 INFO]: /zr spawn add <名称> <类型> - 添加重生点
+[18:46:38 INFO]: /zr spawn remove <名称> - 删除重生点
+[18:46:38 INFO]: /zr spawn list - 列出重生点
+[18:46:38 INFO]: /zr doors add ... - 添加门
+[18:46:38 INFO]: /zr doors remove <名称> - 删除门
+[18:46:38 INFO]: /zr doors list - 列出所有门
+[18:46:38 INFO]: /zr buttons add ... - 添加按钮
+[18:46:38 INFO]: /zr buttons remove <名称> - 删除按钮
+[18:46:38 INFO]: /zr buttons list - 列出所有按钮
+[18:46:38 INFO]: /zr reload - 重载配置
+[18:46:38 INFO]: /zr open - 开始游戏
+[18:46:38 INFO]: /zr close - 结束游戏
+[18:46:38 INFO]: /zr coins set <玩家> <金额> - 设置玩家硬币
+[18:46:38 INFO]: /zr coins add <玩家> <金额> - 给玩家添加硬币
+[18:46:38 INFO]: /zr coins take <玩家> <金额> - 扣除玩家硬币
+[18:46:38 INFO]: /zr reset-all - 清除所有玩家身份与游戏数据(保留硬币)
 
 ### 其他
 
 - `/doorperf`：门区域检测性能测试（管理员）
 
-## 配置结构速览
+## 配置结构速览 (这里我准备修改了 但是没有太理解这个插件 当我理解了以后会更改这个部分 或者放到配置注释 嗯 大概吧..)
 
 配置文件：`plugins/zombie-run/config/config.yml`
 
@@ -142,11 +151,11 @@
 
 ## 参与开发
 
-开发环境搭建、调试与提交流程请查看 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+请前往"CoffeePopStudio/Zombie-Run"这里可能不支持哦。
 
 ## 常见问题
 
-- 枪械列表为空：请确认 `WeaponMechanics` 已正确安装并加载武器配置。
+- 枪械列表不对或不发武器：请确认 gunandgui 或 guiandgun 的配置文件是否设置正确。
 - 占位符无效：请确认 `PlaceholderAPI` 已安装并在插件启动后注册成功。
 - 人数达到后不自动开始：检查 `game.min-players`、`game.start-delay` 以及玩家是否在线于同一服务器实例。
 | `%zombierun_stamina_state%`               | 体力状态（1 正常，2 耗尽）          | 是      | 1                        |
