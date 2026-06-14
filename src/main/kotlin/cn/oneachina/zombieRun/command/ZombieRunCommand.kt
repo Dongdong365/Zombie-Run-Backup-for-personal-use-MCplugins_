@@ -216,6 +216,10 @@ class ZombieRunCommand(private val plugin: ZombieRun) : CommandExecutor, TabComp
                     sender.sendMessage("§c玩家 ${args[0]} 不在线！")
                     return
                 }
+                if (target != sender && !sender.hasPermission("zombie.run.admin")) {
+                    sender.sendMessage("§c你没有权限查看其他玩家的硬币余额！")
+                    return
+                }
                 val coins = plugin.playerDataManager.getCoins(target)
                 sender.sendMessage("§6${target.name} 的硬币余额: $coins")
             }

@@ -246,23 +246,27 @@ class GameListener(private val plugin: ZombieRun) : Listener {
         }
     }
 
+    private fun hasBuildPermission(player: Player): Boolean {
+        return player.hasPermission("zombie.run.admin") || player.hasPermission("zombie.run.build") || player.gameMode == GameMode.CREATIVE || player.isOp
+    }
+
     @EventHandler(ignoreCancelled = true)
     fun onBlockBreak(event: BlockBreakEvent) {
-        if (event.player.gameMode != GameMode.CREATIVE) {
+        if (!hasBuildPermission(event.player)) {
             event.isCancelled = true
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     fun onBlockPlace(event: BlockPlaceEvent) {
-        if (event.player.gameMode != GameMode.CREATIVE) {
+        if (!hasBuildPermission(event.player)) {
             event.isCancelled = true
         }
     }
 
     @EventHandler(ignoreCancelled = true)
     fun onPlayerDropItem(event: PlayerDropItemEvent) {
-        if (event.player.gameMode != GameMode.CREATIVE) {
+        if (!hasBuildPermission(event.player)) {
             event.isCancelled = true
         }
     }
@@ -271,7 +275,7 @@ class GameListener(private val plugin: ZombieRun) : Listener {
     fun onInventoryClick(event: org.bukkit.event.inventory.InventoryClickEvent) {
         if (event.whoClicked is Player) {
             val player = event.whoClicked as Player
-            if (player.gameMode != GameMode.CREATIVE) {
+            if (!hasBuildPermission(player)) {
                 event.isCancelled = true
             }
         }
@@ -279,7 +283,7 @@ class GameListener(private val plugin: ZombieRun) : Listener {
 
     @EventHandler(ignoreCancelled = true)
     fun onPlayerSwapHandItems(event: PlayerSwapHandItemsEvent) {
-        if (event.player.gameMode != GameMode.CREATIVE) {
+        if (!hasBuildPermission(event.player)) {
             event.isCancelled = true
         }
     }

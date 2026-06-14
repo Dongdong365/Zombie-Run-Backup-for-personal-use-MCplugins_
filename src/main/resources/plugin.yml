@@ -45,3 +45,6 @@ permissions:
   zombie.run.start:
     description: 允许使用开始游戏命令
     default: op
+  zombie.run.build:
+    description: 允许在游戏中建造/破坏方块、丢弃物品
+    default: op
